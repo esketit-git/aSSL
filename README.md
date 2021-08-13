@@ -1,7 +1,7 @@
 # aSSL
 aSSL SSL over Ajax, enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
-aSSL implements a technology similar to SSL without HTTPS.
+aSSL implements a technology similar to SSL without HTTPS over http.
 
 aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
@@ -20,6 +20,8 @@ How aSSL 1.2 works
 5. The browser receives the session duration time and sets a timeout to maintain alive the connection.
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers, contemporarily.
+
+The end to end encryption are written in .js (javascript files) and the project incude specific versions for programming languages.
 
 Created by Francesco Sullo - Rome, Italy
 
