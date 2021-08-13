@@ -31,3 +31,7 @@ Ryan Perry for the PHP aSSL porting
 30-12-2009, Fixed a bug in the aSSL PHP version. Thanks to Thomas Krapp.
 
 19-11-2009, Fixed a bug in the aSSL PHP version. Thanks to Mark Brekelmans.
+
+RSA Key Generator
+
+http://travistidwell.com/blog/2013/09/06/an-online-rsa-public-and-private-key-generator/
