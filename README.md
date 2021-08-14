@@ -166,4 +166,4 @@ Password sniffing is much more diffuse because it is much easier. In fact, there
 
 aSSL protects against these sniffers. When a server exchanges account information in clear HTTP, a sniffer can simply intercept all the data, but if the server exchanges the data via aSSL it is not possible to decode the passed data and so the level of security of the site is notably better.
 
-The goal of aSSL  development is remedy these issues.
+The goal of aSSL development is remedy these issues, perhaps by some md5 checksum that only the correct server could have produced or another idea. 
