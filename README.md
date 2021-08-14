@@ -9,6 +9,8 @@ aSSL enables the client to negotiate a secret random 128-bit key with the server
 
 aSSL is composed of some Javascript files and a server side component. I have recently changed the negotiation algoritm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available. Porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is required.
 
+**PHP Version** requires php-gmp so aptget install php5-gmp and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm as per the instruction provided by instal php gmp
+
 **How aSSL works**
 
 1. The browser calls the server to start the process.
