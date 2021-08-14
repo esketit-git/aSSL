@@ -9,7 +9,7 @@ aSSL enables the client to negotiate a secret random 128-bit key with the server
 
 aSSL is composed of some Javascript files and a server side component. I have recently changed the negotiation algoritm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available. Porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is required.
 
-How aSSL works
+**How aSSL works**
 
 1. The browser calls the server to start the process.
 
@@ -42,11 +42,11 @@ http://travistidwell.com/blog/2013/09/06/an-online-rsa-public-and-private-key-ge
 
 aSSL starting, a brief tutorial
 
-Introduction
+**Introduction**
 
 aSSL is composed of two parts: a client-side component and a server-side component. The first is always a set of pure Javascript files, the second depends on specific languages (Javascript, PHP, Java, Ruby, etc.).
 
-Client-side installation
+**Client-side installation**
 
 Unzip the aSSL zip file and put the files into a subdirectory. Then, include the assl.js files into your HTML. For example:
 
@@ -55,7 +55,7 @@ src="assl/assl.js"></script>
 
 This one include inserts all the aSSL scripts into the page.
 
-Server-side installation
+**Server-side installation**
 
 Javascript/ASP case
 
@@ -105,7 +105,8 @@ Any data exchanges following the initial key negotiation won't need all the aSSL
 To better understand the process you can download the source of the aSSL 1.2beta ASP Login Example (including the aSSL libraries) by clicking here.
 In this example, default.asp is the client-side application, conn.asp is the program that establish the connection, mykey.asp is the RSA key container, and loginCheck.asp is the program that does login autentication.
 
-aSSL reference
+
+**aSSL reference**
 
 
 aSSL.connect(uri,callBackFunction[,connectionName])
@@ -156,7 +157,7 @@ Client-side property. By default, once the connection has been established and t
 
 Is aSSL secure as SSL?
 
-Currently No. SSL is secure because it is a technology implemented at browser level so that when an HTTPS connection has been established, the browser checks the SSL Certificate before continuing.
+Currently No. *SSL* is secure because it is implemented at browser level so when a HTTPS connection has been established, the browser checks the SSL Certificate before continuing.
 
 Suppose a man-in-the-middle (MiTM) attack. With an SSL connection, the attack would be successful only should the user click Ok when the browser alerts him saying that the certificate doesn't correspond to the connected server (the alert may also appear if some file is transferred over HTTP instead of HTTPS because in this file a hacker could inject malicious code).
 
