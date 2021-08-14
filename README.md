@@ -1,17 +1,14 @@
 # aSSL Ajax SSL - end to end encryption with Javascript
-aSSL SSL over Ajax, enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
-aSSL implements a technology similar to SSL without http over http. Javascript handles the client side encypryption/decrption and PHP handles the server side, embed in any client / server application and provide end to end encryption without third party issuer.
+aSSL implements technology similar to SSL without https over http. Javascript handles the client side encypryption/decryption and PHP handles the server side encypryption/decryption, embed in any client / server application and provide end to end encryption without third party issuer.
 
-The goal of the project is to make the end to end encryption more secure. Possibly even ID the server to the client without a certificate issuer.
+aSSL utilizes Ajax, the client negotiates a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm. aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
-aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
+aSSL is composed of javascript files and a server side component. Recently changed the negotiation algorithm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available and a PHP version, porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is possible.
 
-aSSL is composed of some Javascript files and a server side component. Recently changed the negotiation algorithm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available. Porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is required.
+The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-**PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the instaation of php-gmp
-
-https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
+**PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the installation of php-gmp. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
 
 **How aSSL works**
 
@@ -26,8 +23,6 @@ https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https
 5. The browser receives the session duration time and sets a timeout to maintain alive the connection.
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers, contemporarily.
-
-The end to end encryption are written in .js (javascript files), the project can be ported to different programming languages or reverted to .js from other languages.
 
 Created by Francesco Sullo - Rome, Italy
 
