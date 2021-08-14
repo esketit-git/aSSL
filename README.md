@@ -38,7 +38,7 @@ Ryan Perry for the PHP aSSL porting
 
 RSA Key Generator
 
-http://travistidwell.com/blog/2013/09/06/an-online-rsa-public-and-private-key-generator/
+http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html
 
 aSSL starting, a brief tutorial
 
