@@ -1,4 +1,4 @@
-# aSSL
+# aSSL Ajax SSL an SSL implementation in Javascript
 aSSL SSL over Ajax, enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
 aSSL implements a technology similar to SSL without HTTPS over http.
@@ -21,7 +21,7 @@ How aSSL 1.2 works
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers, contemporarily.
 
-The end to end encryption are written in .js (javascript files) and the project incude specific versions for programming languages.
+The end to end encryption are written in .js (javascript files), the project can be ported to different programming languages or reverted to .js from other languages.
 
 Created by Francesco Sullo - Rome, Italy
 
