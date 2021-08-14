@@ -11,6 +11,8 @@ aSSL is composed of some Javascript files and a server side component. Recently 
 
 **PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the instaation of php-gmp
 
+https://github.com/pear/Crypt_RSA - implementation of RSA in php version
+
 **How aSSL works**
 
 1. The browser calls the server to start the process.
