@@ -11,7 +11,7 @@ aSSL is composed of some Javascript files and a server side component. Recently 
 
 **PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the instaation of php-gmp
 
-https://github.com/pear/Crypt_RSA - implementation of RSA in php version
+https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
 
 **How aSSL works**
 
