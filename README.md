@@ -1,4 +1,4 @@
-# aSSL Ajax SSL - end to end encryption with client side Javascript & server side PHP
+# aSSL Ajax SSL - end to end encryption with client side JavaScript & server side PHP
 
 aSSL implements technology similar to SSL without https over http. Javascript handles the client side encypryption/decryption and PHP handles the server side encypryption/decryption, embed in any client / server application and provide end to end encryption without third party issuer.
 
