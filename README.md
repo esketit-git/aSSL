@@ -40,6 +40,37 @@ RSA Key Generator
 
 http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html
 
+Parts of the RSA key used in aSSL. mykey.php
+
+Modulus (hex):
+BC86E3DC782C446EE756B874ACECF2A115E613021EAF1ED5EF295BEC2BED899D
+26FE2EC896BF9DE84FE381AF67A7B7CBB48D85235E72AB595ABF8FE840D5F8DB
+
+Public exponent (hex, F4=0x10001): 3, four hex digits also public
+
+above is the public key
+below is the private key
+They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
+
+Private exponent (hex):
+7daf4292fac82d9f44e47af87348a1c0b9440cac1474bf394a1b929d729e5bbc
+f402f29a9300e11b478c091f7e5dacd3f8edae2effe3164d7e0eeada87ee817b
+
+P (hex):
+ef3fc61e21867a900e01ee4b1ba69f5403274ed27656da03ed88d7902cce693f
+
+Q (hex):
+c9b9fcc298b7d1af568f85b50e749539bc01b10a68472fe1302058104821cd65
+
+D mod (P-1) (hex):
+9f7fd9696baefc6009569edcbd19bf8d576f89e1a439e6ad4905e50ac8899b7f
+
+D mod (Q-1) (hex):
+867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
+
+1/Q mod P (hex):
+
+
 aSSL starting, a brief tutorial
 
 **Introduction**
