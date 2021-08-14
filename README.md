@@ -7,9 +7,9 @@ The goal of the project is make the end to end encryption more secure. Possibly 
 
 aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
-aSSL is composed of some Javascript files and a server side component. I have recently changed the negotiation algoritm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available. Porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is required.
+aSSL is composed of some Javascript files and a server side component. Recently changed the negotiation algoritm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available. Porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is required.
 
-**PHP Version** requires php-gmp so aptget install php5-gmp and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm as per the instruction provided by instal php gmp
+**PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the instaation of php-gmp
 
 **How aSSL works**
 
@@ -51,7 +51,9 @@ BC86E3DC782C446EE756B874ACECF2A115E613021EAF1ED5EF295BEC2BED899D
 Public exponent (hex, F4=0x10001): 3, four hex digits also public
 
 above is the public key
+
 below is the private key
+
 They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
 
 Private exponent (hex):
