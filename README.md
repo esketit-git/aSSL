@@ -39,3 +39,117 @@ Ryan Perry for the PHP aSSL porting
 RSA Key Generator
 
 http://travistidwell.com/blog/2013/09/06/an-online-rsa-public-and-private-key-generator/
+
+aSSL starting, a brief tutorial
+
+Introduction
+
+aSSL is composed of two parts: a client-side component and a server-side component. The first is always a set of pure Javascript files, the second depends on specific languages (Javascript, PHP, Java, Ruby, etc.).
+
+Client-side installation
+
+Unzip the aSSL zip file and put the files into a subdirectory. Then, include the assl.js files into your HTML. For example:
+
+<script type="text/javascript" 
+src="assl/assl.js"></script>
+
+This one include inserts all the aSSL scripts into the page.
+
+Server-side installation
+
+Javascript/ASP case
+
+It is sufficient to unzip the aSSLforASP zip in a subdirectory. There are two type of processes managed by aSSL: the secret key negotiation, and the subsequent ecrypted data exchanges.
+
+I suggest using a specific application for the first process and a different one for the others since only the key negotiation requires all of the libraries. For example you can create the following asslconn.asp file:
+
+<%@language="Javascript"%>
+<!--#include file="assl1.2forAsp/assl.asp" -->
+<!--#include file="myKey.asp" --><%
+aSSL.response(myKey)
+%>
+
+The myKey.asp is a file that contains the RSA server key. Look at the following example with a 512-bit key:
+
+<*
+var myKey = [
+   '91305d87dd6de2944fd6a62ceaa5aae1'+
+   '608798c73037747e55ac553b357c4b17'+
+   '47848d671df1772fc755c7fdcbb81be1'+
+   '3d854794622c29832d189aa1382d8617',
+   '10001',
+   '223e3701115f965e068a88bcf546c78b'+
+   'ca7990b6021042407db25c93cf64964c'+
+   'f752072a08c70489ef4a1b8e95d7a948'+
+   'de312e46638cd0fcaa03d654b586ef71',
+   'c4e3ec8bc8753e7ffb78ce2bda372ae2'+
+   '266e3cf309d0940f5f1118c1d2a2bfdf',
+   'bcc6e96e460c6c1461737e9a742ca369'+
+   '320d60cb15a0310b8be7bc4b6ab720c9',
+   '2c315488d387ad6da08e2f089cc44135'+
+   'dd9664cbd06a26b1848f1bd57567de55',
+   '668c23683cf3288f15b518b42ca1c70f'+
+   '311a65574ce31d616959b446bfacc549',
+   '9b6eb5314afaffd51cda024facc091f3'+
+   '8c2f4554076d638844faa9b0f6e5a8c4'
+]
+*>
+
+To generate your RSA key you can use the Simple RSA key generator for aSSL.
+
+Any data exchanges following the initial key negotiation won't need all the aSSL files, but rather, only use assl_.asp (the aSSL kernel) and aes.asp (the AES encryption algorithm). You could include them as the following:
+
+<%@language="Javascript"%>
+<!--#include file="assl1.2forAsp/assl2.asp" -->
+
+To better understand the process you can download the source of the aSSL 1.2beta ASP Login Example (including the aSSL libraries) by clicking here.
+In this example, default.asp is the client-side application, conn.asp is the program that establish the connection, mykey.asp is the RSA key container, and loginCheck.asp is the program that does login autentication.
+
+aSSL reference
+
+
+aSSL.connect(uri,callBackFunction[,connectionName])
+
+Client-side method. It starts the process to establish the connection.
+
+uri is the uri of the server-side application
+
+callBackFunction is the function that will be automatically called after connection is established
+
+connectionName is the name of the connection. If it is not present aSSL opens the '0' connection as default.
+
+
+aSSL.encrypt(clearText)
+
+Client and server-side method. It encrypts the clearText string using the previously negotiated secret 128-bit key.
+
+
+aSSL.decrypt(cipherText)
+
+Client and server-side method. It decrypts the cipherText using the previously negotiated secret 128-bit key.
+
+
+aSSL.response(myKey)
+
+Server-side method. It using the myKey parameter (see above), establishes the connection.
+
+
+aSSL.connections[connectionName].sessionTimeout
+
+Client-side property. It is the session duration time of the specific connection. If you use the default connection you must specify it as '0'.
+
+
+aSSL.connections[connectionName].elapsedTime
+
+Client-side property. It is the time elapsed to establish the connection.
+
+
+aSSL.keySize
+
+Client-side property. As default aSSL generates a 128-bit key (e.g. a key of 16 characters). This is expressed in number of characters. If you want to generate a different key for some mysterous reason you can set this property. For example:
+
+aSSL.keySize = 12
+
+aSSL.onlyMantainSession
+
+Client-side property. By default, once the connection has been established and the secret key has been exchanged with the server, aSSL merely mantains the session. If you prefer that aSSL continually re-negotiates a new key instead of just keeping the session open, set this property to false.
