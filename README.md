@@ -153,3 +153,17 @@ aSSL.keySize = 12
 aSSL.onlyMantainSession
 
 Client-side property. By default, once the connection has been established and the secret key has been exchanged with the server, aSSL merely mantains the session. If you prefer that aSSL continually re-negotiates a new key instead of just keeping the session open, set this property to false.
+
+Is aSSL secure as SSL?
+
+Currently No. SSL is secure because it is a technology implemented at browser level so that when an HTTPS connection has been established, the browser checks the SSL Certificate before continuing.
+
+Suppose a man-in-the-middle (MiTM) attack. With an SSL connection, the attack would be successful only should the user click Ok when the browser alerts him saying that the certificate doesn't correspond to the connected server (the alert may also appear if some file is transferred over HTTP instead of HTTPS because in this file a hacker could inject malicious code).
+
+If a hacker were to attack with a MiTM attack during an aSSL connection, he could be successful.
+
+Password sniffing is much more diffuse because it is much easier. In fact, there are specific softwares that sniff the traffic, recognizes userid and passwords, and register them.
+
+aSSL protects against these sniffers. When a server exchanges account information in clear HTTP, a sniffer can simply intercept all the data, but if the server exchanges the data via aSSL it is not possible to decode the passed data and so the level of security of the site is notably better.
+
+The goal of aSSL  development is remedy these issues.
