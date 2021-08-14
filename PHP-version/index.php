@@ -118,11 +118,10 @@ function showResponse(response) {
 </div>
 </div>
 <p><span class="style3">aSSL negotiate the exchange 128-bit key using <a href="http://www-cs-students.stanford.edu/~tjw/jsbn/" target="_blank">RSA algorithm</a>. After negotiation, the data are encrypted and decrypted using <a href="http://www.movable-type.co.uk/scripts/AES.html" target="_blank">AES algorithm</a>. </span></p>
-<p class="myp firstp style6"><b>More examples</b></p>
+
 <p class="myp"><strong><a href="./<?=$a1024 ? "" : "?size=1024"?>">A <?=$a1024 ? "faster" : "slower"?> aSSL example using a <?=$a1024 ? 512 : 1024?>-bit RSA key</a></strong></p>
 
-<p class="firstp myp"><img src="/assl/pic/green.gif" alt="Green" width="333" height="2" /></p>
-<p class="myp style3"><b>(c) 2006, 2007 <a href="http://www.sullof.com">Francesco Sullo</a> -  Rome, Italy </b></p>
+<p class="myp style3"><b>(c) 2006, 2021 Francesco Sullo</a> -  Rome, Italy </b></p>
 
 </div></div>
 </body>
