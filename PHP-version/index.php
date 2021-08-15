@@ -8,7 +8,6 @@ $a1024 = isset($_GET['size']) && $_GET['size'] == '1024' ? 1 : 0;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css"> 
-@import '../css/base2.css';
 @import 'css/base.css'; 
 </style>
 <title>aSSL 1.2beta</title>
