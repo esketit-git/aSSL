@@ -16,7 +16,7 @@ a {
 
 a:hover {
 	color: #FD4F3F;
-	background-color:#ff9;
+	background-color:#FFFF99;
 	text-decoration:none;
 }
 
@@ -58,7 +58,7 @@ a:hover {
 
 #result {
 	display:none;
-	background-color:#ff9;
+	background-color:#ffff99;
 	padding:2px 4px;
 	margin:2px 0;
 	font-size:10px;
@@ -70,8 +70,8 @@ div#login {
 }
 
 input {
-	border:1px solid #0c6;
-	background-color:#fff;
+	border:1px solid #00CC66;
+	background-color:#FFF;
 	font-family:Tahoma,Arial, Helvetica, sans-serif;
 	font-size:11px;
 	padding:0 0 0 4px;
@@ -80,16 +80,16 @@ input {
 
 
 input.button {
-	border:2px solid #066;
-	background-color:#096;
-	color:#fff;
+	border:2px solid #006666;
+	background-color:#009966;
+	color:#FFFFFF;
 	font-weight:bold;
 }
 
 .bloc {
 	width:200px;
-	border:1px dotted #690;
-	background-color:#df8;
+	border:1px dotted #669900;
+	background-color:#ddFF88;
 	color:#000;
 	padding:8px;
 }
@@ -102,8 +102,8 @@ div#area {
 	display:none;
 	padding:12px;
 	width:270px;
-	background-color:#fff;
-	border:1px #6c3 solid;
+	background-color:#FFFFFF;
+	border:1px #66CC33 solid;
 	font-family:"Courier New", Courier, monospace;
 	font-size:11px;
 }
