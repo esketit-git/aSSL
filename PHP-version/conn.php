@@ -1,6 +1,9 @@
 <?php
 //start session as AES key is stored in $_SESSION
 session_start();
+
+$QS['aSSLConnName'] = session_id();
+
 //require file with key(s)
 require_once 'mykey.php';
 

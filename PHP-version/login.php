@@ -9,10 +9,10 @@ $decrypted = aSSL::decrypt($_POST['data']);
 $res = aSSL::querystr($decrypted);
 
 //valid users
-$users = array('guru' => 'jolly', 'admin' => 'crazy');
+$users = array('guru12345678901234567890' => 'jolly12345678901234567890', 'admin' => 'crazy');
 
 $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['password']) ? 1 : 0;
 //output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
 //aSSL::write($result);
-aSSL::send($result);
+aSSL::send($result); //must use send
 ?>

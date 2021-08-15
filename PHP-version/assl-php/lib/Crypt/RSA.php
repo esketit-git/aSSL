@@ -194,7 +194,7 @@ class Crypt_RSA extends Crypt_RSA_ErrorHandler
         // set error handler
         $this->setErrorHandler($error_handler);
         // try to load math wrapper
-        $obj = &Crypt_RSA_MathLoader::loadWrapper($wrapper_name);
+        $obj = Crypt_RSA_MathLoader::loadWrapper($wrapper_name);
         if ($this->isError($obj)) {
             // error during loading of math wrapper
             // Crypt_RSA object is partially constructed.

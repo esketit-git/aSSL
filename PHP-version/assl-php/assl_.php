@@ -35,6 +35,10 @@ class aSSL
 	 */
 	public static function encrypt($txt, $conn = 0) 
 	{
+
+		$conn = $QS['aSSLConnName'];
+		error_log('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'.$conn,0);
+		
 		$key0 = self::getStringFromHex($_SESSION['aSSL']['aSSLconn'][$conn]['key']);
 		return self::encode(AES::encrypt($txt, $key0));
 	}

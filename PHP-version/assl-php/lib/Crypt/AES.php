@@ -232,6 +232,8 @@ class AES
 	 */
 	public static function encrypt($plaintext, $password) 
 	{
+     //       error_log(" A: ".$plaintext." - ".$password." :B ", 0);
+
 		// ensure plaintext only contains 8-bit characters: use 'escape' to convert anything outside 
 		// ISO-8859-1, but keep spaces as spaces not '%20' to restrict bloat
 		$plaintext = preg_replace('/%20/', ' ', urlencode($plaintext));
@@ -259,13 +261,16 @@ class AES
 		{
 			for ($c = 0; $c < 8; $c++) {
 
-				try {
+			//	try {
 
+			if (4 - $c > -1) {
 				$counterBlock[15 - $c] = ($b >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xFF;  // set counter in counter block
-
-				} catch(ArithmeticError $error) {
-        			error_log($error." - exception caught aritmetic error on bitwise operation - needs urgent fix line 264 of AES.php ", 0);
-				}
+			} else {
+				$counterBlock[15 -$c] = '000000000000000000' & 0xFF;
+			}
+			//	} catch(ArithmeticError $error) {
+        		//	error_log($error." - exception caught aritmetic error on bitwise operation - needs urgent fix line 264 of AES.php ", 0);
+			//	}
 			}
 			$cipherCntr = self::Cipher($counterBlock, $key, $keySchedule);  // -- encrypt counter block --
 		
@@ -290,6 +295,9 @@ class AES
 	
 		// use '+' to separate blocks, since encrypted blocks are of variable size after escaping ctrl chars
 		// use Array.join to concatenate arrays of strings, as repeated string concatenation would be slow
+
+     //       error_log(" C: ".$ctrTxt." - ".$ciphertext." :D ", 0);
+
 		return $ctrTxt . '+' . implode('+', $ciphertext);
 	}
 	
@@ -302,6 +310,9 @@ class AES
 	 */
 	public static function decrypt($ciphertext, $password) 
 	{
+
+      //      error_log(" E: ".$ciphertext." - ".$password." :F ", 0);
+
 		$pwBytes = array();
 		for ($i = 0; $i < 16; $i++) $pwBytes[$i] = ord($password[$i]);
 		$pwKeySchedule = self::KeyExpansion(array(0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1));
@@ -321,12 +332,18 @@ class AES
 		for ($b = 1; $b < count($ciphertext); $b++)
 		{
 			for ($c = 0; $c < 8; $c++) {
-				try {
-			       		$counterBlock[15 - $c] = (($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xff;  // set counter in counter block
+				//				try {
+				//			if ($c > '0' && $b > '0' && ($b - 1 > 0) && (4 - $c > 0)) {
+
+			if (4 - $c > -1) {
+				$counterBlock[15 - $c] = (($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xff;  // set counter in counter block
+			} else {
+                                 $counterBock[15 - $c] = '000000000000000000000' & 0xff;
+			}
 					//$counterBlock[15 - $c] = str_pad((($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xFF,5,'0'); //attempted fix
-				} catch(ArithmeticError $error) {
-        			error_log($error."- exception caught aritmetic error on bitwise operation - need urgent fix line 318 of AES.php", 0);
-				}
+//				} catch(ArithmeticError $error) {
+  //      			error_log($counterBlock[15 - $c]."---------------------------", 0);
+//				}
 			}
 			$cipherCntr = self::Cipher($counterBlock, $key, $keySchedule);  // encrypt counter block
 	
@@ -343,6 +360,11 @@ class AES
 			$plaintext[$b] = $pt;
 		}
 		
+//		error_log( print_r( $plaintext, true));
+
+//		$sex =  urldecode(implode('', $plaintext));
+//		error_log( print_r( $sex, true ) );
+
 		return urldecode(implode('', $plaintext));
 	}
 	
