@@ -168,7 +168,7 @@ AES = {
 	  // ensure plaintext only contains 8-bit characters: use 'escape' to convert anything outside 
 	  // ISO-8859-1, but keep spaces as spaces not '%20' to restrict bloat
 	  plaintext = escape(plaintext).replace(/%20/g,' ');
-	
+
 	  // for this example script, generate the key by applying Cipher to 1st 16 chars of password; for 
 	  // real-world applications, a more secure approach would be to hash the password e.g. with SHA-1
 	  var pwBytes = new Array(16);
