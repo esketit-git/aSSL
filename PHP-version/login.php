@@ -13,5 +13,6 @@ $users = array('guru' => 'jolly', 'admin' => 'crazy');
 
 $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['password']) ? 1 : 0;
 //output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
-aSSL::write($result);
+//aSSL::write($result);
+aSSL::send($result);
 ?>

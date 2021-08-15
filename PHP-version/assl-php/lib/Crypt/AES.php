@@ -257,8 +257,16 @@ class AES
 	  
 		for ($b = 0; $b < $blockCount; $b++) 
 		{
-			for ($c = 0; $c < 8; $c++) $counterBlock[15 - $c] = ($b >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xFF;  // set counter in counter block
-	
+			for ($c = 0; $c < 8; $c++) {
+
+				try {
+
+				$counterBlock[15 - $c] = ($b >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xFF;  // set counter in counter block
+
+				} catch(ArithmeticError $error) {
+        			error_log($error." - exception caught aritmetic error on bitwise operation - needs urgent fix line 264 of AES.php ", 0);
+				}
+			}
 			$cipherCntr = self::Cipher($counterBlock, $key, $keySchedule);  // -- encrypt counter block --
 		
 			// calculate length of final block:
@@ -312,8 +320,14 @@ class AES
 		
 		for ($b = 1; $b < count($ciphertext); $b++)
 		{
-			for ($c = 0; $c < 8; $c++) $counterBlock[15 - $c] = (($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xff;  // set counter in counter block
-	
+			for ($c = 0; $c < 8; $c++) {
+				try {
+			       		$counterBlock[15 - $c] = (($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xff;  // set counter in counter block
+					//$counterBlock[15 - $c] = str_pad((($b - 1) >> ($c >= 4 ? 4 - $c : $c) * 8) & 0xFF,5,'0'); //attempted fix
+				} catch(ArithmeticError $error) {
+        			error_log($error."- exception caught aritmetic error on bitwise operation - need urgent fix line 318 of AES.php", 0);
+				}
+			}
 			$cipherCntr = self::Cipher($counterBlock, $key, $keySchedule);  // encrypt counter block
 	
 			$ciphertext[$b] = self::unescCtrlChars($ciphertext[$b]);
