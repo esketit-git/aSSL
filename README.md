@@ -1,12 +1,12 @@
 # aSSL Ajax SSL - end to end encryption with client side JavaScript & server side PHP
 
-aSSL implements technology similar to SSL without https over http. Javascript handles the client side encypryption/decryption and PHP handles the server side encypryption/decryption, embed in any http client / server application and provide end to end encryption without third party issuer.
+aSSL implements technology similar to SSL without https over http. Javascript handles the client side encyprption/decryption and PHP handles the server side encypryption/decryption, embed in any http client / server application and provide end to end encryption without third party issuer.
 
 aSSL utilizes Ajax, the client negotiates a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm. aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
 
 aSSL is composed of javascript files and a server side component. Recently changed the negotiation algorithm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available and a PHP version, porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is possible.
 
-The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
+Simply copy the PHP-version to web server and load in browser. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
 **PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the installation of php-gmp. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
 
