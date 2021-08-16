@@ -1,28 +1,88 @@
 # aSSL Ajax SSL - end to end encryption with client side JavaScript & server side PHP
 
-aSSL implements technology similar to SSL without https over http. Javascript handles the client side encypryption/decryption and PHP handles the server side encypryption/decryption, embed in any http client / server application and provide end to end encryption without third party issuer.
+aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-aSSL utilizes Ajax, the client negotiates a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm. aSSL enables the client to negotiate a secret random 128-bit key with the server using the RSA algorithm. Once the connection has been established, the data will be sent and received using AES algorithm.
+**How aSSL work
 
-aSSL is composed of javascript files and a server side component. Recently changed the negotiation algorithm from RC4 to RSA, only a pure Javascript (ASP) server component is currently available and a PHP version, porting for the main web languages (PHP, Java, Perl, Python, TKL, etc.) is possible.
+1. On page load the (jvascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
 
-The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
+2. The server side generates and returns its RSA modulus and the public exponent. (the pubic key)
 
-**PHP Version** requires php-gmp so apt get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the installation of php-gmp. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
-
-**How aSSL works**
-
-1. The browser calls the server to start the process.
-
-2. The server returns its RSA modulus and the public exponent.
-
-3. The browser generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
+3. Instead the browser generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
 
 4. The server receives this encrypted 128-bit exchange key, decrypts it with its private key and, if the result is ok, returns the session duration time.
 
 5. The browser receives the session duration time and sets a timeout to maintain alive the connection.
 
-All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers, contemporarily.
+All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
+
+**aSSL reference**
+
+aSSL.connect(uri,callBackFunction[,connectionName])
+
+Client-side method. It starts the process to establish the connection.
+
+uri is the uri of the server-side application
+
+callBackFunction is the function that will be automatically called after connection is established
+
+connectionName is the name of the connection. If it is not present aSSL opens the '0' connection as default.
+
+
+aSSL.encrypt(clearText)
+
+Client and server-side method. It encrypts the clearText string using the previously negotiated secret 128-bit key.
+
+
+aSSL.decrypt(cipherText)
+
+Client and server-side method. It decrypts the cipherText using the previously negotiated secret 128-bit key.
+
+
+aSSL.response(myKey)
+
+Server-side method. It using the myKey parameter (see above), establishes the connection.
+
+
+aSSL.connections[connectionName].sessionTimeout
+
+Client-side property. It is the session duration time of the specific connection. If you use the default connection you must specify it as '0'.
+
+
+aSSL.connections[connectionName].elapsedTime
+
+Client-side property. It is the time elapsed to establish the connection.
+
+
+aSSL.keySize
+
+Client-side property. As default aSSL generates a 128-bit key (e.g. a key of 16 characters). This is expressed in number of characters. If you want to generate a different key for some mysterous reason you can set this property. For example:
+
+aSSL.keySize = 12
+
+aSSL.onlyMantainSession
+
+Client-side property. By default, once the connection has been established and the secret key has been exchanged with the server, aSSL merely mantains the session. If you prefer that aSSL continually re-negotiates a new key instead of just keeping the session open, set this property to false.
+
+Is aSSL secure as SSL?
+
+Currently No. *SSL* is secure because it is implemented at browser level so when a HTTPS connection has been established, the browser checks the SSL Certificate before continuing.
+
+Suppose a man-in-the-middle (MiTM) attack. With an SSL connection, the attack would be successful only should the user click Ok when the browser alerts him saying that the certificate doesn't correspond to the connected server (the alert may also appear if some file is transferred over HTTP instead of HTTPS because in this file a hacker could inject malicious code).
+
+If a hacker were to attack with a MiTM attack during an aSSL connection, he could be successful.
+
+Password sniffing is much more diffuse because it is much easier. In fact, there are specific softwares that sniff the traffic, recognizes userid and passwords, and register them.
+
+aSSL protects against these sniffers. When a server exchanges account information in clear HTTP, a sniffer can simply intercept all the data, but if the server exchanges the data via aSSL it is not possible to decode the passed data and so the level of security of the site is notably better.
+
+The goal of aSSL development is remedy these issues, perhaps by the server sending an md5 checksum that only the correct server could have produced and too hard to guess in the session time or another idea. 
+
+aSSL is composed of javascript files and a server side component. The major functions are located in the files assl_.js and assl_.php. Along with connection, encryption and decryption there are string manipulation functions. aSSL utilizes Ajax to conenct, send and receive. aSSL changed the negotiation algorithm from RC4 to RSA, an original Javascript (ASP) server component is made available with the source code but no longer supported, JS/PHP version, any porting should mirror the existing file structure functions so that any updates to one code can be applied universally.
+
+**PHP Version** requires php-gmp so apt-get install php5-gmp and then you may need to enable PHP FPM in Apache2 by *a2enmod proxy_fcgi setenvif* and *a2enconf php-fpm* and reload apache as per the instructions provided by the installation of php-gmp. 
+
+aSSL uses an encryption lib that PHP no longer supports. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
 
 Created by Francesco Sullo - Rome, Italy
 
@@ -32,7 +92,6 @@ Chriss Veness for its AES Javascript implementation
 Ryan Perry for the PHP aSSL porting 
 
 30-12-2009, Fixed a bug in the aSSL PHP version. Thanks to Thomas Krapp.
-
 19-11-2009, Fixed a bug in the aSSL PHP version. Thanks to Mark Brekelmans.
 
 RSA Key Generator
@@ -70,7 +129,6 @@ D mod (Q-1) (hex):
 867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
 
 1/Q mod P (hex):
-
 
 aSSL starting, a brief tutorial
 
@@ -137,66 +195,3 @@ Any data exchanges following the initial key negotiation won't need all the aSSL
 To better understand the process you can download the source of the aSSL 1.2beta ASP Login Example (including the aSSL libraries) by clicking here.
 In this example, default.asp is the client-side application, conn.asp is the program that establish the connection, mykey.asp is the RSA key container, and loginCheck.asp is the program that does login autentication.
 
-
-**aSSL reference**
-
-
-aSSL.connect(uri,callBackFunction[,connectionName])
-
-Client-side method. It starts the process to establish the connection.
-
-uri is the uri of the server-side application
-
-callBackFunction is the function that will be automatically called after connection is established
-
-connectionName is the name of the connection. If it is not present aSSL opens the '0' connection as default.
-
-
-aSSL.encrypt(clearText)
-
-Client and server-side method. It encrypts the clearText string using the previously negotiated secret 128-bit key.
-
-
-aSSL.decrypt(cipherText)
-
-Client and server-side method. It decrypts the cipherText using the previously negotiated secret 128-bit key.
-
-
-aSSL.response(myKey)
-
-Server-side method. It using the myKey parameter (see above), establishes the connection.
-
-
-aSSL.connections[connectionName].sessionTimeout
-
-Client-side property. It is the session duration time of the specific connection. If you use the default connection you must specify it as '0'.
-
-
-aSSL.connections[connectionName].elapsedTime
-
-Client-side property. It is the time elapsed to establish the connection.
-
-
-aSSL.keySize
-
-Client-side property. As default aSSL generates a 128-bit key (e.g. a key of 16 characters). This is expressed in number of characters. If you want to generate a different key for some mysterous reason you can set this property. For example:
-
-aSSL.keySize = 12
-
-aSSL.onlyMantainSession
-
-Client-side property. By default, once the connection has been established and the secret key has been exchanged with the server, aSSL merely mantains the session. If you prefer that aSSL continually re-negotiates a new key instead of just keeping the session open, set this property to false.
-
-Is aSSL secure as SSL?
-
-Currently No. *SSL* is secure because it is implemented at browser level so when a HTTPS connection has been established, the browser checks the SSL Certificate before continuing.
-
-Suppose a man-in-the-middle (MiTM) attack. With an SSL connection, the attack would be successful only should the user click Ok when the browser alerts him saying that the certificate doesn't correspond to the connected server (the alert may also appear if some file is transferred over HTTP instead of HTTPS because in this file a hacker could inject malicious code).
-
-If a hacker were to attack with a MiTM attack during an aSSL connection, he could be successful.
-
-Password sniffing is much more diffuse because it is much easier. In fact, there are specific softwares that sniff the traffic, recognizes userid and passwords, and register them.
-
-aSSL protects against these sniffers. When a server exchanges account information in clear HTTP, a sniffer can simply intercept all the data, but if the server exchanges the data via aSSL it is not possible to decode the passed data and so the level of security of the site is notably better.
-
-The goal of aSSL development is remedy these issues, perhaps by the server sending an md5 checksum that only the correct server could have produced and too hard toguess in the session time or another idea. 
