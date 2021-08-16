@@ -18,6 +18,8 @@ The PHP directory is the only folder you need as it contains both the js and the
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
 
+The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted.
+
 **aSSL reference**
 
 aSSL.connect(uri,callBackFunction[,connectionName])
