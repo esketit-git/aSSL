@@ -6,15 +6,15 @@ The PHP directory is the only folder you need as it contains both the js and the
 
 **How aSSL works**
 
-1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
+1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. Rther than each side generating their own keys and exchanging them under a session id...
 
-2. The server side generates and returns its RSA modulus and the public exponent. (the pubic key)
+2. The server side PHP still generates and make available its RSA modulus and the public exponent to the client. (the pubic key)
 
-3. Instead the browser generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
+3. But the client instead generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
 
-4. The server receives this encrypted 128-bit exchange key, decrypts it with its private key and, if the result is ok, returns the session duration time.
+4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, returns the session duration time.
 
-5. The browser receives the session duration time and sets a timeout to maintain alive the connection.
+5. The browser receives the session duration time and sets a timeout to keep alive the connection.
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
 
@@ -24,37 +24,31 @@ aSSL.connect(uri,callBackFunction[,connectionName])
 
 Client-side method. It starts the process to establish the connection.
 
-uri is the uri of the server-side application
+uri is the uri of the server-side application.
 
-callBackFunction is the function that will be automatically called after connection is established
+callBackFunction is the function that is automatically called after connection is established
 
 connectionName is the name of the connection. If it is not present aSSL opens the '0' connection as default.
-
 
 aSSL.encrypt(clearText)
 
 Client and server-side method. It encrypts the clearText string using the previously negotiated secret 128-bit key.
 
-
 aSSL.decrypt(cipherText)
 
 Client and server-side method. It decrypts the cipherText using the previously negotiated secret 128-bit key.
-
 
 aSSL.response(myKey)
 
 Server-side method. It using the myKey parameter (see above), establishes the connection.
 
-
 aSSL.connections[connectionName].sessionTimeout
 
 Client-side property. It is the session duration time of the specific connection. If you use the default connection you must specify it as '0'.
 
-
 aSSL.connections[connectionName].elapsedTime
 
 Client-side property. It is the time elapsed to establish the connection.
-
 
 aSSL.keySize
 
