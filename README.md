@@ -2,7 +2,7 @@
 
 aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-**How aSSL work**
+**How aSSL works**
 
 1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
 
@@ -86,52 +86,6 @@ aSSL uses an encryption lib that PHP no longer supports. https://github.com/pear
 
 Created by Francesco Sullo - Rome, Italy
 
-Thanks
-Tom Wu for its BigIntegers and RSA in JavaScript
-Chriss Veness for its AES Javascript implementation
-Ryan Perry for the PHP aSSL porting 
-
-30-12-2009, Fixed a bug in the aSSL PHP version. Thanks to Thomas Krapp.
-19-11-2009, Fixed a bug in the aSSL PHP version. Thanks to Mark Brekelmans.
-
-RSA Key Generator
-
-http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html
-
-Parts of the RSA key used in aSSL. mykey.php
-
-Modulus (hex):
-BC86E3DC782C446EE756B874ACECF2A115E613021EAF1ED5EF295BEC2BED899D
-26FE2EC896BF9DE84FE381AF67A7B7CBB48D85235E72AB595ABF8FE840D5F8DB
-
-Public exponent (hex, F4=0x10001): 3, four hex digits also public
-
-above is the public key
-
-below is the private key
-
-They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
-
-Private exponent (hex):
-7daf4292fac82d9f44e47af87348a1c0b9440cac1474bf394a1b929d729e5bbc
-f402f29a9300e11b478c091f7e5dacd3f8edae2effe3164d7e0eeada87ee817b
-
-P (hex):
-ef3fc61e21867a900e01ee4b1ba69f5403274ed27656da03ed88d7902cce693f
-
-Q (hex):
-c9b9fcc298b7d1af568f85b50e749539bc01b10a68472fe1302058104821cd65
-
-D mod (P-1) (hex):
-9f7fd9696baefc6009569edcbd19bf8d576f89e1a439e6ad4905e50ac8899b7f
-
-D mod (Q-1) (hex):
-867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
-
-1/Q mod P (hex):
-
-aSSL starting, a brief tutorial
-
 **Introduction**
 
 aSSL is composed of two parts: a client-side component and a server-side component. The first is always a set of pure Javascript files, the second depends on specific languages (Javascript, PHP, Java, Ruby, etc.).
@@ -195,3 +149,47 @@ Any data exchanges following the initial key negotiation won't need all the aSSL
 To better understand the process you can download the source of the aSSL 1.2beta ASP Login Example (including the aSSL libraries) by clicking here.
 In this example, default.asp is the client-side application, conn.asp is the program that establish the connection, mykey.asp is the RSA key container, and loginCheck.asp is the program that does login autentication.
 
+
+Thanks
+Tom Wu for its BigIntegers and RSA in JavaScript
+Chriss Veness for its AES Javascript implementation
+Ryan Perry for the PHP aSSL porting 
+
+30-12-2009, Fixed a bug in the aSSL PHP version. Thanks to Thomas Krapp.
+19-11-2009, Fixed a bug in the aSSL PHP version. Thanks to Mark Brekelmans.
+
+RSA Key Generator
+
+http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html
+
+Parts of the RSA key used in aSSL. mykey.php
+
+Modulus (hex):
+BC86E3DC782C446EE756B874ACECF2A115E613021EAF1ED5EF295BEC2BED899D
+26FE2EC896BF9DE84FE381AF67A7B7CBB48D85235E72AB595ABF8FE840D5F8DB
+
+Public exponent (hex, F4=0x10001): 3, four hex digits also public
+
+above is the public key
+
+below is the private key
+
+They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
+
+Private exponent (hex):
+7daf4292fac82d9f44e47af87348a1c0b9440cac1474bf394a1b929d729e5bbc
+f402f29a9300e11b478c091f7e5dacd3f8edae2effe3164d7e0eeada87ee817b
+
+P (hex):
+ef3fc61e21867a900e01ee4b1ba69f5403274ed27656da03ed88d7902cce693f
+
+Q (hex):
+c9b9fcc298b7d1af568f85b50e749539bc01b10a68472fe1302058104821cd65
+
+D mod (P-1) (hex):
+9f7fd9696baefc6009569edcbd19bf8d576f89e1a439e6ad4905e50ac8899b7f
+
+D mod (Q-1) (hex):
+867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
+
+1/Q mod P (hex):
