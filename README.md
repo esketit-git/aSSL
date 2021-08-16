@@ -4,7 +4,7 @@ aSSL implements technology similar to SSL over http. Embed in any http client / 
 
 **How aSSL work**
 
-1. On page load the (jvascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
+1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
 
 2. The server side generates and returns its RSA modulus and the public exponent. (the pubic key)
 
