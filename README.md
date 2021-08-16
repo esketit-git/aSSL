@@ -2,7 +2,7 @@
 
 aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-The PHP directory is the only folder you need as it contains both the js and the php, simply copy and paste to web server and run index.php. The ASP example is a language port and assl folder is just the js files.
+The PHP directory is the only folder you need as it contains both the js and the php, simply copy and paste to web server and run index.php. The ASP example is a language port and aSSL folder is just the js files. PHP Version requires php-gmp so apt-get install php5-gmp and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm and reload apache as per the instructions provided by the installation of php-gmp.
 
 **How aSSL works**
 
