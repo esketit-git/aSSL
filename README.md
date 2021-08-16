@@ -2,6 +2,8 @@
 
 aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
+The PHP directory is the only folder you need as it contains both the js and the php, simply copy and paste to web server and run index.php. The ASP example is a language port and assl folder is just the js files.
+
 **How aSSL works**
 
 1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. However, unlike each side generating their own keys and exchanging them under a session id...
