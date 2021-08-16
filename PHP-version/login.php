@@ -1,18 +1,25 @@
 <?php
-//start session as AES key is stored in $_SESSION
+//start session as RSA key is stored in $_SESSION
 session_start();
-//require needed files
+
+//the main functions of the protocol
 require_once 'assl-php/assl.php';
+
 //decrypt server request
 $decrypted = aSSL::decrypt($_POST['data']);
+
 //get associative array from encrypted data
 $res = aSSL::querystr($decrypted);
 
-//valid users
-$users = array('guru12345678901234567890' => 'jolly12345678901234567890', 'admin' => 'crazy');
+//now the server can compare for valid users
+$users = array('guru' => 'jolly', 'admin' => 'crazy');
 
 $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['password']) ? 1 : 0;
-//output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
+//Returns 1 or 0 to allow access.
+
+//Output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
+
 //aSSL::write($result);
+
 aSSL::send($result); //must use send
 ?>
