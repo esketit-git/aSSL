@@ -18,7 +18,7 @@ The PHP directory is the only folder you need as it contains both the js and the
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
 
-The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted.
+The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted. The encoding after encryption is strings to longs with a 'x' delimiter, upon reception exploded using 'x' and longs to strings. assl_.php has all the functions inc. these functions which are at the bottom of the file. 
 
 **aSSL reference**
 
