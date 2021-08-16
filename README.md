@@ -20,6 +20,12 @@ All subsequent client-server exchanges via aSSL are encrypted and decrypted usin
 
 The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted. The encoding after encryption is strings to longs with a 'x' delimiter, upon reception exploded using 'x' and longs to strings. assl_.php has all the functions inc. these functions which are at the bottom of the file. 
 
+This is what the data looks like...
+
+\xae\x13\x1aa+\xca!43!\xfaV\x9bYB\x9cd>\xaa\xd7#\xec\xfd\x99+.\xdc\xf2c...  - an encrypted return from the AES.php encrypt function.
+1629099125x640641835x3934430346x30144918x2192828255x2196581365x16276006...  - an encoded text strtolongs with x to explode them. 
+Decoded should like the encrypted return and decrypt should return original human readable text.
+
 **aSSL reference**
 
 aSSL.connect(uri,callBackFunction[,connectionName])
