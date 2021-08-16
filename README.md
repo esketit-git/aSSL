@@ -1,4 +1,4 @@
-# aSSL Ajax SSL - end to end encryption with client side JavaScript & server side PHP
+# aSSL Ajax SSL - end to end encryption inbetween client side JavaScript & server side PHP
 
 aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
