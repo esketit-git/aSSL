@@ -18,7 +18,7 @@ The PHP directory is the only folder you need as it contains both the js and the
 
 All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
 
-The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted. The encoding after encryption is strings to longs with a 'x' delimiter, upon reception exploded using 'x' and longs to strings. assl_.php has all the functions inc. these functions which are at the bottom of the file. 
+The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted. The encoding after encryption is strings to longs with a 'x' delimiter, upon reception exploded using 'x' and longs to strings. assl_.php has all the functions inc. these functions which are at the bottom of the file.
 
 **This is what the data looks like...**
 
@@ -199,3 +199,20 @@ D mod (Q-1) (hex):
 867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
 
 1/Q mod P (hex):
+
+
+Files and Development
+---------------------
+The files are identically named irrespective of langauge. One set of files are client side and one set of files are server side. They both reside on the server but the processing is client side or server side. Javascript is a client side language, the interpretor is in the browser and does not pre-processing while PHP is a server side language, the data is sent to the server for processing and returned.
+
+/ - this is where you do your web project that utilizes aSSL in any langauge as long as you can call PHP and JavaScript functions.
+
+jsclient - javascript client side folder
+
+phpserver - PHP server side folder
+
+assl_.       contains all the functions of aSSL - this is the main file
+assl.        just an includes file (ignore unless you want to include)
+lib folder   encryption libs for RSA and AES, the two main files are aes. and rsa. file. They contain the encrypt / decrypt function and RSA key gen function.
+loopbacktests folder    run these file to test all is functioning correctly.
+dev folder              stuff that may be useful for developers
