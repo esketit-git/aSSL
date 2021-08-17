@@ -216,3 +216,5 @@ assl.        just an includes file (ignore unless you want to include)
 lib folder   encryption libs for RSA and AES, the two main files are aes. and rsa. file. They contain the encrypt / decrypt function and RSA key gen function.
 loopbacktests folder    run these file to test all is functioning correctly.
 dev folder              stuff that may be useful for developers
+
+Due to the unicode output of encrypted data, you wan to to get it encoded into hex or base 64 before sending out. Objects like textboxes change data they cannot represent.
