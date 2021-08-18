@@ -52,7 +52,13 @@ console.log("Press f12 to get the console for debugging: " + base);
 //*******************************//
 // The connect routine - step 1  //
 //*******************************//
-$(document).ready(function(){	
+$(document).ready(function(){
+	
+	// Set cache = false for all jquery ajax requests
+	$.ajaxSetup({
+        	cache: false,
+    	});
+	
 	$('#result').hide()
 	$("#connecting").show()
 
