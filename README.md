@@ -88,7 +88,7 @@ aSSL is composed of javascript files and a server side component. The major func
 
 aSSL uses an encryption lib that PHP no longer supports. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA.
 
-Created by Francesco Sullo - Rome, Italy
+Created by Francesco Sullo - Rome, Italy (https://web.archive.org/web/20170216003527/http://assl.sullof.com/assl/)
 
 **Introduction**
 
