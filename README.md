@@ -16,7 +16,7 @@ The PHP directory is the only folder required as it contains both the js and the
 
 5. The browser receives the session duration time and sets a timeout to keep alive the connection.
 
-All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. AES is a symmetric algorithm which uses the same 128, 192, or 256 bit key for both encryption and decryption.  
+All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. AES is a symmetric algorithm which uses the same 128, 192, or 256 bit key for both encryption and decryption.  With a 128-bit key, the task of cracking AES by checking each of the 2128 possible key values (a “brute force” attack) is so computationally intensive that even the fastest supercomputer would require, on average, more than 100 trillion years to do it. AES has never been cracked, and based on current technological trends, is expected to remain secure for years to come.
 
 aSSL allows multiple secure connections to be established with one or more servers.
 
