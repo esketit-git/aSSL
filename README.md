@@ -20,9 +20,9 @@ All subsequent client-server exchanges via aSSL are encrypted and decrypted usin
 
 aSSL allows multiple secure connections to be established with one or more servers.
 
-6. The key only remains alive if AJAX is used, when the browswer reload the key changes happens anew.
+6. The key only remains alive if AJAX is used, when the browser is reload the key generation happens anew.
 
-7. The data is encrypted and then encoded/decoded with base 64 because of the unicode nature of encryption output causes transmission equipment to change the chars. 
+7. The data is encrypted and then encoded/decoded with base 64 because unicode characters cause transmission equipment to change the chars. 
 
 **aSSL reference**
 
