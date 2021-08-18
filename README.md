@@ -1,32 +1,28 @@
 # aSSL Ajax SSL - end to end encryption between client side JavaScript & server side PHP
 
-aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not ready for production. The files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
+aSSL implements technology similar to SSL over http. Embed in any http client / server application and provide end to end encryption without third party issuer. aSSL is in development and not production ready, the files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-The PHP directory is the only folder you need as it contains both the js and the php, simply copy and paste to web server and run index.php. The ASP example is a language port and aSSL folder is just the js files. PHP Version requires php-gmp so apt-get install php5-gmp and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm and reload apache as per the instructions provided by the installation of php-gmp.
+The PHP directory is the only folder required as it contains both the js and the php, simply copy and paste to web server and run index.php. The ASP example is a language port and aSSL folder is just the js files. PHP Version requires php-gmp so **apt-get install php5-gmp** and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm and reload apache as per the instructions provided by the installation of php-gmp.
 
 **How aSSL works**
 
-1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. The client side code and the server side code are mirror versions exact so the protocol is the same for both client and server. Rther than each side generating their own keys and exchanging them under a session id...
+1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. each side does not have their own public and private keys exchanging and signing messages. Instead it works more like regular SSL.
 
-2. The server side PHP still generates and make available its RSA modulus and the public exponent to the client. (the pubic key)
+2. The server side only has the RSA key pair and makes available its RSA modulus and the public exponent to the client, (its the pubic key).
 
-3. But the client instead generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
+3. The client generates a random exchange 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
 
-4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, returns the session duration time.
+4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, sets a session duration time.
 
 5. The browser receives the session duration time and sets a timeout to keep alive the connection.
 
-All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. aSSL allows multiple secure connections to be established with one or more servers.
+All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. AES is a symmetric algorithm which uses the same 128, 192, or 256 bit key for both encryption and decryption.  
 
-The data gets encryped and then encoded and then sent, upon receiving it gets decoded and then decrypted. The encoding after encryption is strings to longs with a 'x' delimiter, upon reception exploded using 'x' and longs to strings. assl_.php has all the functions inc. these functions which are at the bottom of the file.
+aSSL allows multiple secure connections to be established with one or more servers.
 
-**This is what the data looks like...**
+6. The key only remains alive if AJAX is used, when the browswer reload the key changes happens anew.
 
-\xae\x13\x1aa+\xca!43!\xfaV\x9bYB\x9cd>\xaa\xd7#\xec\xfd\x99+.\xdc\xf2c...  - an encrypted return from the AES.php encrypt function.
-
-1629099125x640641835x3934430346x30144918x2192828255x2196581365x16276006...  - an encoded text (encode() and decode() which calls the strtolongs) with x to explode them on decode. 
-
-Decoded should look like the encrypted return and decrypt should return original human readable text.
+7. The data is encrypted and then encoded/decoded with base 64 because of the unicode nature of encryption output causes transmission equipment to change the chars. 
 
 **aSSL reference**
 
