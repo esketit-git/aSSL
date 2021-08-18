@@ -22,7 +22,9 @@ aSSL allows multiple secure connections to be established with one or more serve
 
 6. The key only remains alive if AJAX is used, when the browser is reload the key generation happens anew.
 
-7. The data is encrypted and then encoded/decoded with base 64 because unicode characters cause transmission equipment to change the chars. 
+7. The data is encrypted and then encoded then sent, decoded with base 64 because unicode characters cause transmission equipment to change the chars.
+
+8. The AES 128bit key is also encoded in hex and decoded using getStringFromHex() function before encrypt/decrypt function calls.
 
 **aSSL reference**
 
