@@ -2,7 +2,7 @@
 
 aSSL implements technology similar to SSL over http. Embeddable in any http website application and provide end to end encryption without third party issuer. aSSL is in development and not production ready, the files are a working demo. The goal of the project is to make the end to end encryption more secure, possibly even ID the server to the client without a certificate issuer.
 
-Upload, copy / paste to server and run index.php. aSSL is composed of two parts: a client-side component and a server-side component. The first is always a set of pure Javascript files, the second depends on specific languages (Javascript, PHP, Java, Ruby, etc.), only a PHP version is available.
+Upload, copy / paste to server and run index.php. aSSL is composed of two parts: a client-side component and a server-side component. The first is a client side scripting language, pure Javascript files are used, the second depends on specific languages (Javascript, PHP, Java, Ruby, etc.), only a PHP version is available.
 
 PHP Version requires php-gmp so **apt-get install php5-gmp** and then you may need to enable PHP FPM in Apache2 by a2enmod proxy_fcgi setenvif and a2enconf php-fpm and reload apache as per the instructions provided by the installation of php-gmp.
 
