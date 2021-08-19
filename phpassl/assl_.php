@@ -37,15 +37,15 @@ class aSSL
 	{
 		$conn = $QS['aSSLConnName'];		
 
-        $encodedkey = $_SESSION['aSSL']['aSSLconn'][$conn]['key']; //hex encoded password
+        $encodedkey = $_SESSION['aSSL']['aSSLconn']['key']; //hex encoded password
     	
     	$key0 = self::getStringFromHex($encodedkey); //hex decoded password
 
         $ecryptedtxt = AES::encrypt($txt, $key0); //encrypt
     
-        self::encode($ecryptedtxt); //encode encrypted text to base 64
+        $ret = self::encode($ecryptedtxt); //encode encrypted text to base 64
 
-		return $ecryptedtxt;
+		return $ret; //return decrypted text
 	}
 	
 
@@ -58,15 +58,15 @@ class aSSL
 	 */
 	public static function decrypt($txt, $conn = 0) 
 	{
-        $encodedkey = $_SESSION['aSSL']['aSSLconn'][$conn]['key']; //hex encoded password
+        $encodedkey = $_SESSION['aSSL']['aSSLconn']['key']; //hex encoded password
     
 		$key0 = self::getStringFromHex($encodedkey); //hex decoded password
 
         $decodedtxt = self::decode($txt); //decode text from base 64
 
-        $decryptedtxt = AES::decrypt($decodedtxt, $key0); //decrypt
+        $ret = AES::decrypt($decodedtxt, $key0); //decrypt
 
-		return $decryptedtxt;
+		return $ret; //return decrypted text
 	}
 	
 	
@@ -79,7 +79,7 @@ class aSSL
 	 */
 	public static function write($str) 
 	{
-        error_log($str,0);
+       // error_log($str,0);
 		echo $str ? $str : '';
 	}
 	
@@ -107,7 +107,7 @@ class aSSL
 			if (!$res) self::write('error');
 			else 
 			{
-				$_SESSION['aSSL']['aSSLconn'][$cn]['key'] = $res;
+				$_SESSION['aSSL']['aSSLconn']['key'] = $res;
 				self::write(ini_get('session.gc_maxlifetime'));
 			}
 		}
@@ -126,7 +126,10 @@ class aSSL
 	public static function send($txt, $conn = 0) 
 	{
 		$QS = self::querystr();
-		self::write(self::encrypt($txt, null, $conn ? $conn : $QS['aSSLConnName']));
+
+        $encrypted_reply = self::encrypt($txt, null, $conn ? $conn : $QS['aSSLConnName']);        
+   
+		self::write($encrypted_reply);
 	}
 	
 	
@@ -177,12 +180,7 @@ class aSSL
         $enc_slash = strtr($enc_plus, '/', '.'); //base64 chars not web safe replaced
         $ret = strtr($enc_slash, '=', '-'); //base64 chars not web safe replaced
 
-        //$ret = urlencode( $b64encoded ); //php lib
-
-        //error_log($txt." <<<<<<<<<<< txt - Encode Function - encode ".$ret, 0);
-
         return $ret;
-
 	}
 	
 	
@@ -203,14 +201,9 @@ class aSSL
         $enc_slash = strtr($enc_plus, '.', '/'); //base64 chars not web safe replaced
         $enc_equals = strtr($enc_slash, '-', '='); //base64 chars not web safe replaced
 
-        //$urldecoded = urldecode( $b64encoded );
-
         $ret = base64_decode( $enc_equals );
 
-        //error_log($b64encoded." <<<<<<<<<<< b64encoded - Encode Function - decoded ".$ret, 0);
-
         return $ret;
-
 	}
 
 } //end class aSSL
