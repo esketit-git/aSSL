@@ -20,7 +20,7 @@
 <p id="d9"></p>
 <p id="d10"></p>
 
-<form action="php.php" method="post">
+<form action="phpong.php" method="post">
 <label for="w3review">Encrypted and Encoded Ready 2b sent:</label><br />
 <textarea id="w3review" name="w3review" rows="20" cols="80"></textarea>
   <br><br>

@@ -83,7 +83,7 @@ echo "<h2>Encrypted and Encoded Ready 2B Sent To JS:</h2><hr>";
 
 ?>
 
-<form action="js.php" method="post">
+<form action="jsping.php" method="post">
 <label for="w3review">Encrypted and Encoded Ready 2b sent to js:</label><br />
 <textarea id="w3review" name="w3review" rows="20" cols="80"><?php echo $sendback; ?></textarea>
   <br><br>
