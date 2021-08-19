@@ -66,12 +66,20 @@ aSSL = {
 	},
 	
 	encrypt: function (txt,conn) {
+
+//debugger;
+
 		var key0 = this._getStringFromHex(this._init(conn).key);
+
 		return this.encode(AES.encrypt(txt,key0));
 	},
 	
 	decrypt: function (txt,conn) {
+
+//debugger;
+
 		var key0 = this._getStringFromHex(this._init(conn).key);
+       
 		return AES.decrypt(this.decode(txt),key0);
 	},
 
@@ -161,17 +169,45 @@ aSSL = {
 		}
 		return qs;
 	},
-	
-	encode: function (txt) {
 
-        var ret = window.btoa(txt);
+	/**
+	 * Encode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
+	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
+     *
+     * Both functions are from the JavaScript helper functions
+	 * @param string $txt
+	 * @return string
+	 */
+
+	encode: function ( txt ) {
+
+        var b64encoded = window.btoa( txt );
+
+        var ret = encodeURIComponent( b64encoded );
+
+//debugger;
+
         return ret
 
 	},
 	
-	decode: function (txt) {
+	/**
+     * Decode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
+	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
+     *
+     * Both functions are from the JavaScript helper functions
+	 * @param string $txt
+	 * @return string
+	 */
 
-        var ret = window.atob(txt);
+	decode: function ( b64encoded ) {
+
+        var urldecoded = decodeURIComponent( b64encoded );
+
+        var ret = window.atob( urldecoded );
+
+//debugger;
+
         return ret;
 	},
 	
