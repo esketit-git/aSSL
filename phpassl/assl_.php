@@ -173,9 +173,13 @@ class aSSL
 
         $b64encoded = base64_encode( $txt ); //php lib
 
-        $ret = urlencode( $b64encoded ); //php lib
+        $enc_plus = strtr($b64encoded, '+', '_'); //base64 chars not web safe replaced
+        $enc_slash = strtr($enc_plus, '/', '.'); //base64 chars not web safe replaced
+        $ret = strtr($enc_slash, '=', '-'); //base64 chars not web safe replaced
 
-        error_log($txt." <<<<<<<<<<< txt - Encode Function - encode ".$ret, 0);
+        //$ret = urlencode( $b64encoded ); //php lib
+
+        //error_log($txt." <<<<<<<<<<< txt - Encode Function - encode ".$ret, 0);
 
         return $ret;
 
@@ -195,11 +199,15 @@ class aSSL
 	private static function decode( $b64encoded ) 
 	{
 
-        $urldecoded = urldecode( $b64encoded );
+        $enc_plus = strtr($b64encoded, '_', '+'); //base64 chars not web safe replaced
+        $enc_slash = strtr($enc_plus, '.', '/'); //base64 chars not web safe replaced
+        $enc_equals = strtr($enc_slash, '-', '='); //base64 chars not web safe replaced
 
-        $ret = base64_decode( $urldecoded );
+        //$urldecoded = urldecode( $b64encoded );
 
-        error_log($b64encoded." <<<<<<<<<<< b64encoded - Encode Function - decoded ".$ret, 0);
+        $ret = base64_decode( $enc_equals );
+
+        //error_log($b64encoded." <<<<<<<<<<< b64encoded - Encode Function - decoded ".$ret, 0);
 
         return $ret;
 
