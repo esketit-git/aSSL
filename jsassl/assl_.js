@@ -32,7 +32,7 @@ aSSL = {
 	vername: 'aSSL', version: '1.2beta3', verdate: '2006-01-08',
 	
 // if you put this to false before Session brokes aSSL negotiate a new exchange key:
-	onlyMantainSession: true,
+	onlyMantainSession: false,
 
 	connections: [],
 
@@ -67,23 +67,29 @@ aSSL = {
 	
 	encrypt: function (txt,conn) {
 
-//debugger;
-
 		var key0 = this._getStringFromHex(this._init(conn).key);
 
-		return this.encode(AES.encrypt(txt,key0));
+        var encrypted = AES.encrypt(txt,key0);
+
+        var encrypted_encoded = this.encode(encrypted);
+
+		return encrypted_encoded; 
 	},
 	
 	decrypt: function (txt,conn) {
 
-//debugger;
-
 		var key0 = this._getStringFromHex(this._init(conn).key);
+
+        var decoded = this.decode(txt);
+
+        var decrypted = AES.decrypt(decoded, key0);
        
-		return AES.decrypt(this.decode(txt),key0);
+		return decrypted;
 	},
 
+    //What is first called on page load
 	connect: function (url,callback,conn) {
+
 		var currc = this._init(conn);
 		var now = new Date();
 		currc._startedAt = now.getTime()
@@ -173,7 +179,6 @@ aSSL = {
 	/**
 	 * Encode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
 	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
-     * Uses https://github.com/dankogai/js-base64 because atob and btoa cannot handle UTF8
      * 
 	 * @param string $txt
 	 * @return string
@@ -183,13 +188,9 @@ aSSL = {
 
         var b64encoded = window.btoa( txt );
 
-        //var ret = encodeURIComponent( b64encoded );
-
            var enc_plus = this.strtr ( b64encoded, "+", "_" );
            var enc_equal = this.strtr ( enc_plus, "=", "-" );
            var ret = this.strtr ( enc_equal, "/", "." );
-
-//debugger;
 
         return ret
 
@@ -198,8 +199,6 @@ aSSL = {
 	/**
      * Decode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
 	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
-     * Uses https://github.com/dankogai/js-base64 because atob and btoa cannot handle UTF8
-     * https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
      * 
 	 * @param string $txt
 	 * @return string
@@ -211,8 +210,6 @@ aSSL = {
         var enc_plus = this.strtr ( b64encoded, "_", "+" );
         var enc_equal = this.strtr ( enc_plus, "-", "=" );
         var web_ready = this.strtr ( enc_equal, ".", "/" );
-
-        //var urldecoded = decodeURIComponent( b64encoded );
 
         var ret = window.atob( web_ready );
 
@@ -236,32 +233,4 @@ aSSL = {
         return string.split(search).join(replace);
     },
 
-	
-// Thanks to Chris Veness // www.movable-type.co.uk
-// for the following two methods	
-
-	_strToLongs: function (s) {
-		var ll = Math.ceil(s.length/4);
-		var l = new Array(ll);
-		for (var i=0; i<ll; i++) {
-			l[i] = s.charCodeAt(i*4)
-				+ (s.charCodeAt(i*4+1)<<8)
-				+ (s.charCodeAt(i*4+2)<<16)
-				+ (s.charCodeAt(i*4+3)<<24);
-		}
-		return l;
-	},
-
-	_longsToStr: function (l) {
-		var a = new Array(l.length);
-		for (var i=0; i<l.length; i++) {
-			a[i] = String.fromCharCode(
-				l[i] & 0xFF,
-				l[i]>>>8 & 0xFF,
-				l[i]>>>16 & 0xFF,
-				l[i]>>>24 & 0xFF
-			);
-		}
-		return a.join('');
-	}
 };
