@@ -14,7 +14,7 @@ PHP Version requires php-gmp so **apt-get install php5-gmp** and then you may ne
 
 3. The client generates a random 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
 
-4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, sets a session duration time.
+4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, sets a session duration time, however Javascript has no sessions so when the page is reloaded the process begins anew, this constant key renewal might add a challenge to a hacker. The system depends of Ajax, jQuery to keep the key in memory on the client side for just long enough to send and reeive encrypted data.
 
 5. The browser receives the session duration time and sets a timeout to keep alive the connection.
 
