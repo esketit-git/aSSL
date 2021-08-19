@@ -35,14 +35,20 @@ class aSSL
 	 */
 	public static function encrypt($txt, $conn = 0) 
 	{
+		$conn = $QS['aSSLConnName'];		
 
-		$conn = $QS['aSSLConnName'];
-		
-		$key0 = self::getStringFromHex($_SESSION['aSSL']['aSSLconn'][$conn]['key']);
-		return self::encode(AES::encrypt($txt, $key0));
+        $encodedkey = $_SESSION['aSSL']['aSSLconn'][$conn]['key']; //hex encoded password
+    	
+    	$key0 = self::getStringFromHex($encodedkey); //hex decoded password
+
+        $ecryptedtxt = AES::encrypt($txt, $key0); //encrypt
+    
+        self::encode($ecryptedtxt); //encode encrypted text to base 64
+
+		return $ecryptedtxt;
 	}
 	
-	
+
 	/**
 	 * AES data decryption
 	 *
@@ -52,8 +58,15 @@ class aSSL
 	 */
 	public static function decrypt($txt, $conn = 0) 
 	{
-		$key0 = self::getStringFromHex($_SESSION['aSSL']['aSSLconn'][$conn]['key']);
-		return AES::decrypt(self::decode($txt), $key0);
+        $encodedkey = $_SESSION['aSSL']['aSSLconn'][$conn]['key']; //hex encoded password
+    
+		$key0 = self::getStringFromHex($encodedkey); //hex decoded password
+
+        $decodedtxt = self::decode($txt); //decode text from base 64
+
+        $decryptedtxt = AES::decrypt($decodedtxt, $key0); //decrypt
+
+		return $decryptedtxt;
 	}
 	
 	
@@ -66,6 +79,7 @@ class aSSL
 	 */
 	public static function write($str) 
 	{
+        error_log($str,0);
 		echo $str ? $str : '';
 	}
 	
@@ -145,72 +159,51 @@ class aSSL
 	
 	
 	/**
-	 * Encodes string to format supported by client library.
-	 *
+	 * Encode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
+	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
+     * encodeURI() will not encode: ~!@#$&*()=:/,;?+'
+     *
+     * Both functions are from the PHP helper functions - PHP lib
 	 * @param string $txt
 	 * @return string
 	 */
-	private static function encode($txt) 
+
+	private static function encode( $txt ) 
 	{
 
-        $ret = base64_encode($txt);
+        $b64encoded = base64_encode( $txt ); //php lib
+
+        $ret = urlencode( $b64encoded ); //php lib
+
+        error_log($txt." <<<<<<<<<<< txt - Encode Function - encode ".$ret, 0);
+
         return $ret;
 
 	}
 	
 	
 	/**
-	 * Decodes string
-	 *
+     * Decode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
+	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
+     * encodeURI() will not encode: ~!@#$&*()=:/,;?+'
+     *
+     * Both functions are from the PHP helper functions - PHP lib
 	 * @param string $txt
 	 * @return string
 	 */
-	private static function decode($txt) 
+
+	private static function decode( $b64encoded ) 
 	{
 
-        $ret = base64_decode($txt);
+        $urldecoded = urldecode( $b64encoded );
+
+        $ret = base64_decode( $urldecoded );
+
+        error_log($b64encoded." <<<<<<<<<<< b64encoded - Encode Function - decoded ".$ret, 0);
+
         return $ret;
 
 	}
-	
-	
-	/**
-	 * Converts string to array of longs
-	 *
-	 * @param string $s
-	 * @return array()
-	 */
-	private static function strToLongs($s) 
-	{
-		$ll = ceil(strlen($s)/4);
-		$l = array();
-		for ($i = 0; $i < $ll; $i++) 
-		{
-			$l[$i] = ord($s[$i * 4]) 
-				+ (ord($s[$i * 4 + 1]) << 8) 
-				+ (ord($s[$i * 4 + 2]) << 16)
-				+ (ord($s[$i * 4 + 3]) << 24);
-		}
-		return $l;
-	}
-	
-	/**
-	 * Converts array of longs to string
-	 *
-	 * @param array $l
-	 * @return string
-	 */
-	private static function longsToStr($l) 
-	{
-		$a = array();
-		for ($i = 0; $i < count($l); $i++) 
-		{
-			$a[$i] = chr($l[$i] & 0xFF) 
-				. chr($l[$i] >> 8 & 0xFF)
-				. chr($l[$i] >> 16 & 0xFF)
-				. chr($l[$i] >> 24 & 0xFF);
-		}
-		return implode('', $a);
-	}
-}
-?>
+
+} //end class aSSL
+
