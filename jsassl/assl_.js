@@ -173,8 +173,8 @@ aSSL = {
 	/**
 	 * Encode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
 	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
-     *
-     * Both functions are from the JavaScript helper functions
+     * Uses https://github.com/dankogai/js-base64 because atob and btoa cannot handle UTF8
+     * 
 	 * @param string $txt
 	 * @return string
 	 */
@@ -183,7 +183,11 @@ aSSL = {
 
         var b64encoded = window.btoa( txt );
 
-        var ret = encodeURIComponent( b64encoded );
+        //var ret = encodeURIComponent( b64encoded );
+
+           var enc_plus = this.strtr ( b64encoded, "+", "_" );
+           var enc_equal = this.strtr ( enc_plus, "=", "-" );
+           var ret = this.strtr ( enc_equal, "/", "." );
 
 //debugger;
 
@@ -194,22 +198,44 @@ aSSL = {
 	/**
      * Decode string to base 64 so transmission equipment does not replace unknown characters with ? or other chars
 	 * Url-encode base64 as strings contain the "+", "=" and "/" chars which transmission equipment could change
-     *
-     * Both functions are from the JavaScript helper functions
+     * Uses https://github.com/dankogai/js-base64 because atob and btoa cannot handle UTF8
+     * https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
+     * 
 	 * @param string $txt
 	 * @return string
 	 */
 
+
 	decode: function ( b64encoded ) {
 
-        var urldecoded = decodeURIComponent( b64encoded );
+        var enc_plus = this.strtr ( b64encoded, "_", "+" );
+        var enc_equal = this.strtr ( enc_plus, "-", "=" );
+        var web_ready = this.strtr ( enc_equal, ".", "/" );
 
-        var ret = window.atob( urldecoded );
+        //var urldecoded = decodeURIComponent( b64encoded );
+
+        var ret = window.atob( web_ready );
 
 //debugger;
 
         return ret;
 	},
+
+	
+    /**
+     * Equiv of strtr in PHP
+	 * base64 encode of "+", "=" and "/" are not web safe
+
+     *
+     * Both functions are from the JavaScript helper functions
+	 * @param string $original string, key, replace
+	 * @return string
+	 */
+
+    strtr: function ( string, search, replace ) {
+        return string.split(search).join(replace);
+    },
+
 	
 // Thanks to Chris Veness // www.movable-type.co.uk
 // for the following two methods	
