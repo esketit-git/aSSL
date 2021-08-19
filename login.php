@@ -14,7 +14,7 @@ session_start();
 //decrypt server request
 $decrypted = aSSL::decrypt($_POST['data']);
 
-////turn POST data into array format rather than string
+//turn POST data into array format rather than string
 $res = aSSL::querystr($decrypted);
 
 //now the server can compare for valid users
@@ -23,9 +23,10 @@ $users = array('guru' => 'jolly', 'admin' => 'easy');
 $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['password']) ? 1 : 0;
 //Returns 1 or 0 to allow access.
 
+//error_log($result,0);
 //Output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
 
-//aSSL::write($result);
+aSSL::write($result);
 
-aSSL::send($result); //must use send
+//aSSL::send($result); //must use send
 ?>

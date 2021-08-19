@@ -6,10 +6,14 @@ $a1024 = isset($_GET['size']) && $_GET['size'] == '1024' ? 1 : 0;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 <style type="text/css"> 
 @import 'base.css'; 
 </style>
+
 <title>aSSL</title>
 
 <!-- Turning off caching for dev -->
@@ -20,23 +24,24 @@ $a1024 = isset($_GET['size']) && $_GET['size'] == '1024' ? 1 : 0;
 <link rel="shortcut icon" href="images/favicon.ico" />
 
 <!-- the entire aSSL system must be included in every page 10 files -->
-<?php
-require_once "phpassl/lib/Crypt/RSA.php";
-require_once "phpassl/lib/Crypt/AES.php";
-require_once "phpassl/assl_.php";
-?>
+<!-- the order of the files is important jsbn, prng4, rng, rsa, aes, assl -->
+<!-- use jquery to post forms to server -->
+<link rel="stylesheet" href="base.css" type="text/css" media="all">
+<script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="jsassl/lib/jsbn/jsbn.js"></script>
 <script type="text/javascript" src="jsassl/lib/jsbn/prng4.js"></script>
 <script type="text/javascript" src="jsassl/lib/jsbn/rng.js"></script>
 <script type="text/javascript" src="jsassl/lib/jsbn/rsa.js"></script>
 <script type="text/javascript" src="jsassl/lib/aes.js"></script>
 <script type="text/javascript" src="jsassl/assl_.js"></script>
-
-<link rel="stylesheet" href="base.css" type="text/css" media="all">
 <!--ends here -->
 
-<!-- use jquery to post forms to server -->
-<script type="text/javascript" src="jquery.js"></script>
+<?php
+require_once "phpassl/lib/Crypt/RSA.php";
+require_once "phpassl/lib/Crypt/AES.php";
+require_once "phpassl/assl_.php";
+
+?>
 
 <script type="text/javascript">
 
@@ -52,29 +57,32 @@ console.log("Press f12 to get the console for debugging: " + base);
 //*******************************//
 // The connect routine - step 1  //
 //*******************************//
-$(document).ready(function(){
-	
-	// Set cache = false for all jquery ajax requests
-	$.ajaxSetup({
-        	cache: false,
-    	});
-	
-	$('#result').hide()
-	$("#connecting").show()
 
-	var url = base +'conn.php<?=$a1024 ? "?size=1024&" : ""?>'
+    $(document).ready(function(){
 
-    console.log("debug connect url: " + url);
+        //Set browser cache to false for jquery.
+        (function($) {
+            $.ajaxSetup({
+                cache: false,
+            });
+        })(jQuery);
 
-	aSSL.connect(url,showConn)
-})
+        	$('#result').hide()
+        	$("#connecting").show()
+
+	    var url = base +'conn.php<?=$a1024 ? "?size=1024&" : ""?>'
+
+        console.log("debug connect url: " + url);
+
+	    aSSL.connect(url,showConn)
+    })
 
 //*********************************//
 // The result of connect - step 2  //
 //*********************************//
 function showConn(response) {
 
-    console.log("debug showConn: " + response);
+   // console.log("debug showConn: " + response);
 
 	if (response) {
 
@@ -104,7 +112,7 @@ function showConn(response) {
     call receive () and decrypt ()
 */
 
-var nick = ""
+var nick = "";
 
 // When we try to login we launch the following:
 
@@ -129,6 +137,10 @@ function decryptReceive(response) {
 /************************************************************
  Todo: we must call the decrypt function which is missing
 *************************************************************/
+
+//var res = aSSL.decrypt(response.responseText);
+
+//alert(res);
 	
         // This depends of what we expect from the server. In this example we expect the id of the user (i.e. 1 or 2):
 		if (response.responseText == '1' || response.responseText == '2') {
