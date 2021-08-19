@@ -26,7 +26,7 @@ $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['passwor
 //error_log($result,0);
 //Output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
 
-aSSL::write($result);
+//aSSL::write($result);
 
-//aSSL::send($result); //must use send
+aSSL::send($result); //must use send
 ?>
