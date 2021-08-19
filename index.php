@@ -40,7 +40,6 @@ $a1024 = isset($_GET['size']) && $_GET['size'] == '1024' ? 1 : 0;
 require_once "phpassl/lib/Crypt/RSA.php";
 require_once "phpassl/lib/Crypt/AES.php";
 require_once "phpassl/assl_.php";
-
 ?>
 
 <script type="text/javascript">
@@ -49,8 +48,6 @@ require_once "phpassl/assl_.php";
 
 // Returns web root dir
 var base = window.location.toString().split("?")[0].replace(/[^\/]+$/,"")
-
-console.log("Press f12 to get the console for debugging: " + base);
 
 // Step 1 connect - aSSL.connect method
 // showConn is the function that aSSL.connect calls after the connection is established
@@ -72,8 +69,6 @@ console.log("Press f12 to get the console for debugging: " + base);
 
 	    var url = base +'conn.php<?=$a1024 ? "?size=1024&" : ""?>'
 
-        console.log("debug connect url: " + url);
-
 	    aSSL.connect(url,showConn)
     })
 
@@ -82,7 +77,6 @@ console.log("Press f12 to get the console for debugging: " + base);
 //*********************************//
 function showConn(response) {
 
-   // console.log("debug showConn: " + response);
 
 	if (response) {
 
@@ -138,12 +132,17 @@ function decryptReceive(response) {
  Todo: we must call the decrypt function which is missing
 *************************************************************/
 
-//var res = aSSL.decrypt(response.responseText);
+    var res = aSSL.decrypt(response.responseText);
 
-//alert(res);
-	
-        // This depends of what we expect from the server. In this example we expect the id of the user (i.e. 1 or 2):
-		if (response.responseText == '1' || response.responseText == '2') {
+   
+//window.alert(response.responseText); // only use with write and not send option see login.php
+
+
+        //This depends of what we expect from the server. In this example we expect the id of the user (i.e. 1 or 2):
+		
+        //if (response.responseText == '1' || response.responseText == '2') {
+
+        if (res == '1' || response.res == '2') {
 			$('#module').html('<h1>Welcome '+nick+'</h1><h2><a href="javascript:location.reload()">Logout</a></h2>')
 			$('#login').hide()
             document.getElementById('login').innerHTML.hide()
@@ -163,21 +162,15 @@ function decryptReceive(response) {
 		$('#result').html("Connection error...").show();
         $('.result').html("Connection error...").show();
 	}
-
 }
 
 </script>
 </head>
 <body>
-
 <div id="asslbar">
-
 	<div id="connecting" class="asslStatus">Establishing an aSSL encrypted connection with the server.</div>
-
 	<div id="connected" class="asslStatus">An aSSL encrypted connection has been established. Time elapsed: <span id="timeElapsed"></span> ms.</div>
-
 	<div id="noconnect" class="asslStatus">Warning! Unable to establish an aSSL encrypted connection.</div>
-
 </div>
 
 <div id="bodyAround">

@@ -23,10 +23,7 @@ $users = array('guru' => 'jolly', 'admin' => 'easy');
 $result = ($users[$res['nickname']] && $users[$res['nickname']] == $res['password']) ? 1 : 0;
 //Returns 1 or 0 to allow access.
 
-//error_log($result,0);
-//Output result. It can be done with aSSL::send($result) if data returned to server should be encrypted.
+aSSL::write($result); //only data sent is encryptedm, data return to server is not encrypted
 
-//aSSL::write($result);
-
-aSSL::send($result); //must use send
+//aSSL::send($result); //must use send - both send and receive are encrypted
 ?>
