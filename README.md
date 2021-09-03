@@ -8,17 +8,15 @@ PHP Version requires php-gmp so **apt-get install php5-gmp** and then you may ne
 
 **How aSSL works**
 
-1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. each side does not have their own public and private keys exchanging and signing messages. Instead it works more like regular SSL.
+1. On page load the (Javascript) connection routine is called aSSL.connect(url,showConn) and the PHP connection routine is called aSSL::response() conn.php. Each side doesn't have their own public and private keys, exchanging and signing messages. Instead it works more like regular SSL.
 
-2. The server side only has the RSA key pair and makes available its RSA modulus and the public exponent to the client, (its the pubic key).
+2. Only the server side has the RSA key pair and sends its RSA modulus and the public exponent to the client, (its pubic key).
 
 3. The client generates a random 128-bit key, encrypts it using the server public key and passes the encrypted exchange key to the server.
 
-4. The server receives this encrypted 128-bit key, decrypts it with its private key and, if the result is ok, sets a session duration time, however Javascript has no sessions so when the page is reloaded the process begins anew, this constant key renewal might add a challenge to a hacker. The system depends of Ajax, jQuery to keep the key in memory on the client side for just long enough to send and receive encrypted data.
+4. The server receives the encrypted 128-bit key, decrypts it with its private key and, if the result is ok, sets a session duration time. Javascript has no sessions so when the page is reloaded the process begins anew, this constant key renewal might add a challenge to a hacker. The system depends on Ajax, jQuery to keep the key in memory on the client side for just long enough to send and receive encrypted data.
 
-5. The browser receives the session duration time and sets a timeout to keep alive the connection.
-
-All subsequent client-server exchanges via aSSL are encrypted and decrypted using AES algorithm. AES is a symmetric algorithm which uses the same 128, 192, or 256 bit key for both encryption and decryption.  With a 128-bit key, the task of cracking AES by checking each of the 2128 possible key values (a “brute force” attack) is so computationally intensive that even the fastest supercomputer would require, on average, more than 100 trillion years to do it. AES has never been cracked, and based on current technological trends, is expected to remain secure for years to come.
+All subsequent client-server exchanges are encrypted and decrypted using AES algorithm. AES is a symmetric algorithm which uses the same 128, 192, or 256 bit key for both encryption and decryption.  With a 128-bit key, the task of cracking AES by checking each of the 2128 possible key values (a “brute force” attack) is so computationally intensive that even the fastest supercomputer would require, on average, more than 100 trillion years to do it. AES has never been cracked, and based on current technological trends, is expected to remain secure for years to come.
 
 aSSL allows multiple secure connections to be established with one or more servers.
 
@@ -82,7 +80,7 @@ Password sniffing is much more diffuse because it is much easier. In fact, there
 
 The goal of aSSL development is remedy these issues, such as trace route monitoring or server to client authentication. 
 
-aSSL is composed of javascript files and server side files. The major functions are located in the files assl_.js and assl_.php. Along with connection, encryption and decryption there are string manipulation functions. aSSL utilizes Ajax to connect, send and receive. aSSL changed the negotiation algorithm from RC4 to RSA. The directory structure.
+aSSL is composed of javascript files and server side files. The major functions are located in the files assl_.js and assl_.php. Along with connection, encryption and decryption there are string manipulation functions. aSSL utilizes Ajax to connect, send and receive. aSSL used to use negotiation algorithm RC4 but has updated to RSA. The directory structure.
 
 See the index.php and run it in a browser, simple. It is an example login using aSSL.
 
@@ -99,13 +97,16 @@ The source code are mirror images of eachother. So any changes must be identical
 
 aSSL uses an encryption lib that PHP no longer supports. https://github.com/pear/Crypt_RSA - implementation of RSA in php version,  https://pear.php.net/package/Crypt_RSA - message reads This package is not maintained anymore and has been superseded. Package has moved to channel phpseclib.sourceforge.net, package Crypt_RSA. The package has fixes and still functions.
 
-Orintally created by Francesco Sullo - Rome, Italy (https://web.archive.org/web/20170216003527/http://assl.sullof.com/assl/), the project was orphaned some years ago now. Thanks go to... Tom Wu for its BigIntegers and RSA in JavaScript, Chriss Veness for its AES Javascript implementation, Ryan Perry for the PHP aSSL porting 
+Originally created by Francesco Sullo - Rome, Italy (https://web.archive.org/web/20170216003527/http://assl.sullof.com/assl/), the project was orphaned some years ago now. Credits go to... Tom Wu for its BigIntegers and RSA in JavaScript, Chriss Veness for its AES Javascript implementation, Ryan Perry for the PHP aSSL porting 
 
 30-12-2009, Fixed a bug in the aSSL PHP version. Thanks to Thomas Krapp.
 19-11-2009, Fixed a bug in the aSSL PHP version. Thanks to Mark Brekelmans.
 
+Tony remembered the project, downloaded it from the wayback machine, fixed it and posted it on github.
+
 The myKey.asp is a file that contains the RSA server key. Look at the following example with a 512-bit key:
 
+<pre>
 <*
 var myKey = [
    '91305d87dd6de2944fd6a62ceaa5aae1'+
@@ -129,10 +130,11 @@ var myKey = [
    '8c2f4554076d638844faa9b0f6e5a8c4'
 ]
 *>
-
-To generate your RSA key you can use the Simple RSA key generator for aSSL.
+</pre>
 
 **This key should be changed.**
+
+To generate your RSA key you can use the Simple RSA key generator for aSSL.
 
 RSA Key Generator
 
@@ -140,9 +142,11 @@ http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html
 
 Parts of the RSA key used in aSSL. mykey.php
 
+<pre>
 Modulus (hex):
 BC86E3DC782C446EE756B874ACECF2A115E613021EAF1ED5EF295BEC2BED899D
 26FE2EC896BF9DE84FE381AF67A7B7CBB48D85235E72AB595ABF8FE840D5F8DB
+</pre>
 
 Public exponent (hex, F4=0x10001): 3, four hex digits also public
 
@@ -152,23 +156,30 @@ below is the private key
 
 They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
 
+<pre>
 Private exponent (hex):
 7daf4292fac82d9f44e47af87348a1c0b9440cac1474bf394a1b929d729e5bbc
 f402f29a9300e11b478c091f7e5dacd3f8edae2effe3164d7e0eeada87ee817b
-
+</pre>
+<pre>
 P (hex):
 ef3fc61e21867a900e01ee4b1ba69f5403274ed27656da03ed88d7902cce693f
-
+</pre>
+<pre>
 Q (hex):
 c9b9fcc298b7d1af568f85b50e749539bc01b10a68472fe1302058104821cd65
-
+</pre>
+<pre>
 D mod (P-1) (hex):
 9f7fd9696baefc6009569edcbd19bf8d576f89e1a439e6ad4905e50ac8899b7f
-
+</pre>
+<pre>
 D mod (Q-1) (hex):
 867bfdd7107a8bca39b503ce09a30e267d567606f02f7540cac03ab5856bde43
-
+</pre>
+<pre>
 1/Q mod P (hex):
+</pre>
 
 Bye.
 Tony
