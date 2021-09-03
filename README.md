@@ -154,8 +154,6 @@ above is the public key
 
 below is the private key
 
-They can be generated http://www-cs-students.stanford.edu/~tjw/jsbn/rsa2.html and installed in mykey.php
-
 <pre>
 Private exponent (hex):
 7daf4292fac82d9f44e47af87348a1c0b9440cac1474bf394a1b929d729e5bbc
